@@ -119,8 +119,12 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Text(
             '치킨 잠실점',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          )
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
         ],
       ),
     );
@@ -140,16 +144,17 @@ class _CartScreenState extends State<CartScreen> {
                 '후라이드 치킨',
                 style: TextStyle(
                   fontSize: 17,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
+              Spacer(), //빈공간을 채워줌.
               IconButton(
+                onPressed: () {},
                 icon: Icon(
                   Icons.close,
                   color: Colors.grey,
                 ),
-                onPressed: () {},
               ),
             ],
           ),
@@ -232,14 +237,12 @@ class _CartScreenState extends State<CartScreen> {
   Widget _buildBilling() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
+          color: Colors.white,
+          border: Border(
+              bottom: BorderSide(
             color: Colors.grey.withOpacity(0.3),
             width: 2,
-          ),
-        ),
-      ),
+          ))),
       child: Column(
         children: [
           SizedBox(
