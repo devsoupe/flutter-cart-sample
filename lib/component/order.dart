@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screen/cart_screen.dart';
 import '../utils/currency_utils.dart';
 
 class Order extends StatelessWidget {
@@ -7,6 +8,8 @@ class Order extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = Count.of(context).value;
+
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -29,7 +32,7 @@ class Order extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      '1',
+                      '$count',
                       style: TextStyle(
                         color: Color.fromRGBO(44, 191, 188, 1.0),
                         fontWeight: FontWeight.bold,
@@ -41,7 +44,7 @@ class Order extends StatelessWidget {
                   width: 7,
                 ),
                 Text(
-                  '${CurrencyUtils.getCommaWon(21000)}원 배달 주문하기',
+                  '${CurrencyUtils.getCommaWon(18000  * count + 3000)}원 배달 주문하기',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

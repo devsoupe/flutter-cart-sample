@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screen/cart_screen.dart';
 import '../utils/currency_utils.dart';
 
 class Billing extends StatelessWidget {
@@ -7,6 +8,8 @@ class Billing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int count = Count.of(context).value;
+
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -26,7 +29,7 @@ class Billing extends StatelessWidget {
               children: [
                 Text('총 주문금액'),
                 Spacer(),
-                Text('${CurrencyUtils.getCommaWon(18000)}원'),
+                Text('${CurrencyUtils.getCommaWon(18000 * count)}원'),
               ],
             ),
           ),
@@ -72,7 +75,7 @@ class Billing extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  '${CurrencyUtils.getCommaWon(21000)}원',
+                  '${CurrencyUtils.getCommaWon((18000 * count) + 3000)}원',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
