@@ -1,14 +1,10 @@
-import 'package:cart_sample/screen/cart_screen.dart';
+import 'package:cart_sample/model/count_model.dart';
 import 'package:cart_sample/utils/currency_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatefulWidget {
-  final VoidCallback decrementCallback;
-  final VoidCallback incrementCallback;
-
   const Menu({
-    required this.decrementCallback,
-    required this.incrementCallback,
     Key? key,
   }) : super(key: key);
 
@@ -17,8 +13,11 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  late CountModel _countModel;
+
   @override
   void didChangeDependencies() {
+    _countModel = Provider.of<CountModel>(context, listen: true);
     super.didChangeDependencies();
   }
 
@@ -109,8 +108,6 @@ class _MenuState extends State<Menu> {
   }
 
   Widget _buildCount() {
-    int count = Count.of(context).value;
-
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.withOpacity(0.4)),
@@ -122,14 +119,14 @@ class _MenuState extends State<Menu> {
           IconButton(
             icon: Icon(Icons.remove),
             disabledColor: Colors.grey,
-            onPressed: (count == 1)
+            onPressed: (_countModel.count == 1)
                 ? null
-                : widget.decrementCallback,
+                : () => _countModel.decrementCounter(),
           ),
-          Text('$count'),
+          Text('${_countModel.count}'),
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: widget.incrementCallback,
+            onPressed: _countModel.incrementCounter,
           ),
         ],
       ),
