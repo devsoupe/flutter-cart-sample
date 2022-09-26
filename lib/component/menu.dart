@@ -1,7 +1,26 @@
+import 'package:cart_sample/screen/cart_screen.dart';
+import 'package:cart_sample/utils/currency_utils.dart';
 import 'package:flutter/material.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class Menu extends StatefulWidget {
+  final VoidCallback decrementCallback;
+  final VoidCallback incrementCallback;
+
+  const Menu({
+    required this.decrementCallback,
+    required this.incrementCallback,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +86,50 @@ class Menu extends StatelessWidget {
                       color: Color.fromRGBO(125, 125, 125, 1.0),
                     ),
                   ),
-                  Text('18,000원'),
+                  Text('${CurrencyUtils.getCommaWon(18000)}원'),
                 ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              _buildCount(),
+              SizedBox(
+                width: 20,
               ),
             ],
           ),
           SizedBox(
             height: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCount() {
+    int count = Count.of(context).value;
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.withOpacity(0.4)),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(Icons.remove),
+            disabledColor: Colors.grey,
+            onPressed: (count == 1)
+                ? null
+                : widget.decrementCallback,
+          ),
+          Text('$count'),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: widget.incrementCallback,
           ),
         ],
       ),
