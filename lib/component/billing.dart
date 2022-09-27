@@ -1,14 +1,28 @@
+import 'package:cart_sample/model/count_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screen/cart_screen.dart';
 import '../utils/currency_utils.dart';
 
-class Billing extends StatelessWidget {
+class Billing extends StatefulWidget {
   const Billing({Key? key}) : super(key: key);
 
   @override
+  State<Billing> createState() => _BillingState();
+}
+
+class _BillingState extends State<Billing> {
+  late CountModel _countModel;
+
+  @override
+  void didChangeDependencies() {
+    _countModel = Provider.of<CountModel>(context, listen: true);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int count = Count.of(context).value;
+
 
     return Container(
       decoration: BoxDecoration(
@@ -29,7 +43,7 @@ class Billing extends StatelessWidget {
               children: [
                 Text('총 주문금액'),
                 Spacer(),
-                Text('${CurrencyUtils.getCommaWon(18000 * count)}원'),
+                Text('${CurrencyUtils.getCommaWon(18000 * _countModel.count)}원'),
               ],
             ),
           ),
@@ -75,7 +89,7 @@ class Billing extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  '${CurrencyUtils.getCommaWon((18000 * count) + 3000)}원',
+                  '${CurrencyUtils.getCommaWon((18000 * _countModel.count) + 3000)}원',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -91,6 +105,4 @@ class Billing extends StatelessWidget {
       ),
     );
   }
-
-
 }

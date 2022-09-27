@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screen/cart_screen.dart';
+import '../model/count_model.dart';
 import '../utils/currency_utils.dart';
 
 class Order extends StatelessWidget {
@@ -8,8 +9,6 @@ class Order extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count = Count.of(context).value;
-
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -20,6 +19,12 @@ class Order extends StatelessWidget {
             vertical: 10,
           ),
           child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Color.fromRGBO(44, 191, 188, 1.0),
+              ),
+            ),
+            onPressed: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -31,34 +36,35 @@ class Order extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: Text(
-                      '$count',
+                    child:
+                    Consumer<CountModel>(builder: (_, countModel, __) => Text(
+                      '${countModel.count}',
                       style: TextStyle(
                         color: Color.fromRGBO(44, 191, 188, 1.0),
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    ),),
                   ),
                 ),
                 SizedBox(
                   width: 7,
                 ),
-                Text(
-                  '${CurrencyUtils.getCommaWon(18000  * count + 3000)}원 배달 주문하기',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                _order(),
               ],
             ),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Color.fromRGBO(44, 191, 188, 1.0),
-              ),
-            ),
-            onPressed: () {},
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _order() {
+    return Consumer<CountModel>(
+      builder: (_, countModel, __) => Text(
+        '${CurrencyUtils.getCommaWon(18000 * countModel.count + 3000)}원 배달 주문하기',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
